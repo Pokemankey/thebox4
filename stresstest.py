@@ -2,6 +2,7 @@ import requests
 import json
 import concurrent.futures
 import random
+import time
 
 # change for your host
 VLLM_HOST = "http://localhost:8000"
@@ -27,11 +28,15 @@ def send_request(prompt):
     data = {
         "model": "meta-llama/Meta-Llama-3-8B",
         "prompt": prompt,
-        "temperature": 0,
         "max_tokens": 300
     }
+    stime = time.time()
     response = requests.post(url, headers=headers, data=json.dumps(data))
-    return response.json()["choices"][0]["text"]
+    etime = time.time()
+    ctime = round(etime - stime, ndigits=3)
+    total_time = stime-etime
+    tokens_per_second = response.json()["usage"]["completion_tokens"]/ctime
+    return [total_time, tokens_per_second]
 
 # Function to pick a random prompt from the list
 def pick_random_prompt():

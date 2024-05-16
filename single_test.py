@@ -15,4 +15,4 @@ data = {
 
 response = requests.post(url, headers=headers, data=json.dumps(data))
 
-print(response.json()['choices'][0]['text'])
+print(response.json()['choices'][0])
