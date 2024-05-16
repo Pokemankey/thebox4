@@ -57,4 +57,4 @@ num_requests = 100  # Change this to the desired number of requests
 # Execute stress test and print the responses
 responses = stress_test(num_requests)
 for i, response in enumerate(responses):
-    print(f"Response {i+1}: {response}")
+    print(f"Response {i+1}:: total_time = {response[0]}, tokens_per_second = {response[1]}")
