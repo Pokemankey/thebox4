@@ -23,7 +23,7 @@ for output in outputs:
     generated_text = output.outputs[0].text
     metrics = output.metrics
     tokens = len(output.outputs[0].text.split(" "))
-    total_time = metrics.first_token_time - metrics.finished_time 
+    total_time = metrics.finished_time - metrics.first_token_time
     time_to_first_token = metrics.first_token_time - metrics.arrival_time
     tokens_per_second = tokens/total_time
     print(f"total_time: {total_time}, time to first token: {time_to_first_token}, tokens_per_second: {tokens_per_second}")
