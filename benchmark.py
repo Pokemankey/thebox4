@@ -10,7 +10,7 @@ prompts = [
     "The future of AI is",
 ]
 # Create a sampling params object.
-sampling_params = SamplingParams()
+sampling_params = SamplingParams(max_tokens=30)
 
 # Create an LLM.
 llm = LLM(model=modelname)
@@ -21,7 +21,7 @@ outputs = llm.generate(prompts, sampling_params)
 for output in outputs:
     prompt = output.prompt
     generated_text = output.outputs[0].text
-    print(output.metrics)
+    print(output.metrics['arrival_time'])
     print(f"Prompt: {prompt!r}, Generated text: {generated_text!r}")
 
 
