@@ -22,7 +22,12 @@ for output in outputs:
     prompt = output.prompt
     generated_text = output.outputs[0].text
     metrics = output.metrics
-    print(metrics)
-    print(f"Prompt: {prompt!r}, Generated text: {generated_text!r}")
+    tokens = len(output.outputs[0].text.split(" "))
+    latency = metrics.finished_time - metrics.arrival_time 
+    time_to_first_token = metrics.first_token_time - metrics.arrival_time
+    tokens_per_second = tokens/(metrics.last_token_time - metrics.first_token_time)
+    print(f"latency: {latency}, time to first token: {time_to_first_token}, tokens_per_second: {tokens_per_second}")
+    # print(metrics)
+    # print(f"Prompt: {prompt!r}, Generated text: {generated_text!r}")
 
 
