@@ -34,7 +34,7 @@ def send_request(prompt):
     response = requests.post(url, headers=headers, data=json.dumps(data))
     etime = time.time()
     ctime = round(etime - stime, ndigits=3)
-    total_time = stime-etime
+    total_time = etime-stime
     tokens_per_second = response.json()["usage"]["completion_tokens"]/ctime
     return [total_time, tokens_per_second]
 
