@@ -1,6 +1,7 @@
 import requests
 import json
 import concurrent.futures
+import random
 
 # change for your host
 VLLM_HOST = "http://localhost:8000"
@@ -8,18 +9,38 @@ url = f"{VLLM_HOST}/v1/completions"
 
 headers = {"Content-Type": "application/json"}
 
+# List of prompts
+prompts = [
+    "How to bake a cake",
+    "The benefits of exercise",
+    "The future of artificial intelligence",
+    "Exploring space exploration",
+    "The importance of education",
+    "The impact of climate change",
+    "The history of ancient civilizations",
+    "The art of storytelling",
+    "The evolution of technology",
+    "The psychology of happiness"
+]
+
 def send_request(prompt):
     data = {
         "model": "meta-llama/Meta-Llama-3-8B",
         "prompt": prompt,
-        "temperature": 0
+        "temperature": 0,
+        "max_tokens": 300
     }
     response = requests.post(url, headers=headers, data=json.dumps(data))
     return response.json()["choices"][0]["text"]
 
+# Function to pick a random prompt from the list
+def pick_random_prompt():
+    return random.choice(prompts)
+
 # Function to send multiple requests concurrently
 def stress_test(num_requests):
-    prompts = ["JupySQL is"] * num_requests
+    # Pick random prompts for each request
+    prompts = [pick_random_prompt() for _ in range(num_requests)]
     with concurrent.futures.ThreadPoolExecutor() as executor:
         # Map each prompt to the send_request function and execute them concurrently
         results = list(executor.map(send_request, prompts))
