@@ -4,11 +4,17 @@ modelname = "meta-llama/Meta-Llama-3-8B"
 
 # Sample prompts.
 prompts = [
-    "Hello, my name is",
-    "The president of the United States is",
-    "The capital of France is",
-    "The future of AI is",
-]
+    "How to bake a cake",
+    "The benefits of exercise",
+    "The future of artificial intelligence",
+    "Exploring space exploration",
+    "The importance of education",
+    "The impact of climate change",
+    "The history of ancient civilizations",
+    "The art of storytelling",
+    "The evolution of technology",
+    "The psychology of happiness"
+]*10
 # Create a sampling params object.
 sampling_params = SamplingParams(max_tokens=300)
 

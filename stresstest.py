@@ -3,9 +3,10 @@ import json
 import concurrent.futures
 import random
 import time
+import csv
 
-# change for your host
-VLLM_HOST = "http://localhost:8000"
+# Change for your host
+VLLM_HOST = "https://fuz1mes6xpcxgb-8000.proxy.runpod.net"
 url = f"{VLLM_HOST}/v1/completions"
 
 headers = {"Content-Type": "application/json"}
@@ -34,9 +35,9 @@ def send_request(prompt):
     response = requests.post(url, headers=headers, data=json.dumps(data))
     etime = time.time()
     ctime = round(etime - stime, ndigits=3)
-    total_time = etime-stime
+    total_time = etime - stime
     tokens = response.json()["usage"]["completion_tokens"]
-    tokens_per_second = tokens/ctime
+    tokens_per_second = tokens / ctime
     return [total_time, tokens_per_second, tokens]
 
 # Function to pick a random prompt from the list
@@ -55,7 +56,17 @@ def stress_test(num_requests):
 # Define the number of concurrent requests
 num_requests = 100  # Change this to the desired number of requests
 
-# Execute stress test and print the responses
+# Execute stress test and store the responses
 responses = stress_test(num_requests)
-for i, response in enumerate(responses):
-    print(f"Response {i+1}:: total_time = {response[0]}, tokens_per_second = {response[1]}, generated_tokens = {response[2]}")
+
+# Generate CSV file with the responses
+csv_filename = "stress_test_results.csv"
+with open(csv_filename, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    # Write the header
+    writer.writerow(["Sr No.", "Total Time (s)", "Tokens per Second", "Generated Tokens"])
+    # Write the data
+    for i, response in enumerate(responses):
+        writer.writerow([i + 1] + response)
+
+print(f"Results have been written to {csv_filename}")
