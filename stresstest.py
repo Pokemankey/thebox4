@@ -35,8 +35,9 @@ def send_request(prompt):
     etime = time.time()
     ctime = round(etime - stime, ndigits=3)
     total_time = etime-stime
-    tokens_per_second = response.json()["usage"]["completion_tokens"]/ctime
-    return [total_time, tokens_per_second]
+    tokens = response.json()["usage"]["completion_tokens"]
+    tokens_per_second = tokens/ctime
+    return [total_time, tokens_per_second, tokens]
 
 # Function to pick a random prompt from the list
 def pick_random_prompt():
@@ -57,4 +58,4 @@ num_requests = 100  # Change this to the desired number of requests
 # Execute stress test and print the responses
 responses = stress_test(num_requests)
 for i, response in enumerate(responses):
-    print(f"Response {i+1}:: total_time = {response[0]}, tokens_per_second = {response[1]}")
+    print(f"Response {i+1}:: total_time = {response[0]}, tokens_per_second = {response[1]}, generated_tokens = {response[2]}")
