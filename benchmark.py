@@ -1,6 +1,6 @@
 from vllm import LLM, SamplingParams
 
-modelname = "meta-llama/Meta-Llama-3-8B"
+modelname = "mistralai/Mistral-7B-Instruct-v0.2"
 
 # Sample prompts.
 prompts = [

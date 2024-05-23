@@ -1,18 +1,29 @@
 import requests
 import json
+import requests
+import json
+import concurrent.futures
+import random
+import time
+import csv
 
 # change for your host
-VLLM_HOST = "http://localhost:8000"
+VLLM_HOST = "https://cgqjwus9a4fqzl-8000.proxy.runpod.net"
 url = f"{VLLM_HOST}/v1/completions"
 
 headers = {"Content-Type": "application/json"}
 data = {
-    "model": "meta-llama/Meta-Llama-3-8B",
-    "prompt": "JupySQL is",
-    "max_tokens": 100,
+    "model": "meta-llama/Meta-Llama-3-70B",
+    "prompt": "How to bake a cake",
+    "max_tokens": 300,
     "temperature": 0
 }
-
+stime = time.time()
 response = requests.post(url, headers=headers, data=json.dumps(data))
-
+etime = time.time()
+ctime = round(etime - stime, ndigits=3)
+total_time = etime - stime
+tokens = response.json()["usage"]["completion_tokens"]
+tokens_per_second = tokens / ctime
+print(f'Latency = {total_time}  TokensPerSec = {tokens_per_second}')
 print(response.json()['choices'][0])
