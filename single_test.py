@@ -8,14 +8,15 @@ import time
 import csv
 
 # change for your host
-VLLM_HOST = "https://cgqjwus9a4fqzl-8000.proxy.runpod.net"
+VLLM_HOST = "http://localhost:8000"
 url = f"{VLLM_HOST}/v1/completions"
 
 headers = {"Content-Type": "application/json"}
 data = {
-    "model": "meta-llama/Meta-Llama-3-70B",
+    "model": "meta-llama/CodeLlama-34b-hf",
     "prompt": "How to bake a cake",
     "max_tokens": 300,
+    "min_tokens": 280,
     "temperature": 0
 }
 stime = time.time()

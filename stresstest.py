@@ -6,7 +6,7 @@ import time
 import csv
 
 # Change for your host
-VLLM_HOST = "https://cgqjwus9a4fqzl-8000.proxy.runpod.net"
+VLLM_HOST = "http://localhost:8000"
 url = f"{VLLM_HOST}/v1/completions"
 
 headers = {"Content-Type": "application/json"}
@@ -27,7 +27,7 @@ prompts = [
 
 def send_request(prompt):
     data = {
-        "model": "meta-llama/Meta-Llama-3-70B",
+        "model": "meta-llama/CodeLlama-34b-hf",
         "prompt": prompt,
         "max_tokens": 300
     }
@@ -54,7 +54,7 @@ def stress_test(num_requests):
     return results
 
 # Define the number of concurrent requests
-num_requests = 50  # Change this to the desired number of requests
+num_requests = 10  # Change this to the desired number of requests
 
 # Execute stress test and store the responses
 responses = stress_test(num_requests)
